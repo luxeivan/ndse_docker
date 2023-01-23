@@ -1,0 +1,65 @@
+PS D:\Netology\ndse_library> docker pull node:15.14
+15.14: Pulling from library/node
+bfde2ec33fbc: Pull complete
+787f5e2f1047: Pull complete
+7b6173a10eb8: Pull complete
+dc05be471d51: Pull complete
+55fab5cadd3c: Pull complete
+bd821d20ef8c: Pull complete
+6041b69671c6: Pull complete
+989c5d2d2313: Pull complete
+4b57d41e8391: Pull complete
+Digest: sha256:608bba799613b1ebf754034ae008849ba51e88b23271412427b76d60ae0d0627
+Status: Downloaded newer image for node:15.14
+docker.io/library/node:15.14
+PS D:\Netology\ndse_library> docker run --name mynode -it -e NAME=Иван -e SURNAME=Шишкин
+"docker run" requires at least 1 argument.
+See 'docker run --help'.
+
+Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Run a command in a new container
+PS D:\Netology\ndse_library> docker run --name mynode -it -e NAME=Иван -e SURNAME=Шишкин node
+Unable to find image 'node:latest' locally
+latest: Pulling from library/node
+Unable to find image 'node:latest' locally
+latest: Pulling from library/node
+bbeef03cda1f: Downloading [===>                                               ]   4.32MB/55.03MB
+f049f75f014e: Downloading [===============================>                   ]  3.275MB/5.163MB
+56261d0e6b05: Downloading [================>                                  ]  3.558MB/10.88MB
+9bd150679dbd: Waiting5b282ee9da04: Waiting
+8bc43c905b24: Waiting3ce9e21024ae: Waiting
+36d91be124f1: Waiting
+7d6b04e90455: Waiting
+PS D:\Netology\ndse_library> docker run --name mynode -it -e NAME=Иван -e SURNAME=Шишкин node:15.14
+Welcome to Node.js v15.14.0.
+Type ".help" for more information.
+> console.log(`Привет, ${process.env.NAME} ${process.env.SURNAME}!`)
+Привет, Иван Шишкин!
+undefined
+> .exit
+PS D:\Netology\ndse_library> docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+PS D:\Netology\ndse_library> docker rmi node:15.14
+Error response from daemon: conflict: unable to remove repository reference "node:15.14" (must force) - container 4d4656d43607 is using its referenced image 3d3f41722daf
+PS D:\Netology\ndse_library> docker ps -a
+CONTAINER ID   IMAGE        COMMAND                  CREATED         STATUS                      PORTS     NAMES
+4d4656d43607   node:15.14   "docker-entrypoint.s…"   5 minutes ago   Exited (0) 37 seconds ago             mynode
+PS D:\Netology\ndse_library> docker rm mymode
+Error: No such container: mymode
+PS D:\Netology\ndse_library> docker rm mynode
+mynode
+PS D:\Netology\ndse_library> docker rmi node:15.14
+Untagged: node:15.14
+Untagged: node@sha256:608bba799613b1ebf754034ae008849ba51e88b23271412427b76d60ae0d0627
+Deleted: sha256:3d3f41722daf1a77c34d6eade6676bbffa2d6a2a21095de2ab0c427a5c942fc9
+Deleted: sha256:601382991a159cfc5013ad973158f30b7b7a913e8d7e547b3456deab3ad98022
+Deleted: sha256:d5db49eecae8c02c9ea3a79f89c43ded9162bac118a0302a7b514d0df82aa112
+Deleted: sha256:a2c1973858d0aad3de0927294602b17c8ef9050c30e0f461e0868997a08552a4
+Deleted: sha256:a0153172017a08a521a8be971ca4dcb5fbc4b7227642c12bbb2da6265bd66b50
+Deleted: sha256:f1123940e954d335d91b52a40fab4f8144f38ff113ade7d65663071d0f06da6f
+Deleted: sha256:f1f4fbb0e7e6e0ce2d9eae1e577f9f6df0a719dd874bff00b2d08895c75c297d
+Deleted: sha256:1eb455ab6d45fdbbd90fccff791ffa228080c052acf464f8da1b1d78650bd706
+Deleted: sha256:1dbe832a694971a925d7d216f49b700c95f402bd72288f9d37eceb1d59dcf72d
+Deleted: sha256:2f4ee6a2e1b5dfb9236cd262e788f9d39109242ca27a4aacb583c8af66ec3ff7
+PS D:\Netology\ndse_library> 
