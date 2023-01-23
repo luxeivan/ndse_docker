@@ -1,0 +1,108 @@
+PS D:\Netology\ndse_library> docker pull node:15.14
+15.14: Pulling from library/node
+bfde2ec33fbc: Pull complete
+787f5e2f1047: Pull complete
+7b6173a10eb8: Pull complete
+dc05be471d51: Pull complete
+55fab5cadd3c: Pull complete
+bd821d20ef8c: Pull complete
+6041b69671c6: Pull complete
+989c5d2d2313: Pull complete
+4b57d41e8391: Pull complete
+Digest: sha256:608bba799613b1ebf754034ae008849ba51e88b23271412427b76d60ae0d0627
+Status: Downloaded newer image for node:15.14
+docker.io/library/node:15.14
+PS D:\Netology\ndse_library> cd ..
+PS D:\Netology> docker run --name first_node -v %cd%:/var/first/data -d node:15.14
+docker: Error response from daemon: create %cd%: "%cd%" includes invalid characters for a local volume name, only "[a-zA-Z0-9][a-zA-Z0-9_.-]" are allowed. If you intended to pass a host directory, use absolute path.
+See 'docker run --help'.
+PS D:\Netology> docker run --name first_node -v D:\Netology:/var/first/data -d node:15.14
+49c30c7a472c1abfdb852a2a3969ee8d86982911ac7ce8d768680e3d03a1c086
+PS D:\Netology> docker run --name second_node -v D:\Netology:/var/second/data -d node:15.14
+f47aa96ead73e8c0550d1e1d3a6e997e5d016b46cc9f38d0cccd85c27150266f
+PS D:\Netology> docker exec -it /bin/sh
+"docker exec" requires at least 2 arguments.
+See 'docker exec --help'.
+
+Usage:  docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
+
+Run a command in a running container
+PS D:\Netology> docker exec -it first_node /bin/sh
+Error response from daemon: Container 49c30c7a472c1abfdb852a2a3969ee8d86982911ac7ce8d768680e3d03a1c086 is not running
+PS D:\Netology> docker exec -it first_node /bin/bash
+Error response from daemon: Container 49c30c7a472c1abfdb852a2a3969ee8d86982911ac7ce8d768680e3d03a1c086 is not running
+PS D:\Netology> docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+PS D:\Netology> docker run -d --name second_node -v D:\Netology:/var/second/data node:15.14
+docker: Error response from daemon: Conflict. The container name "/second_node" is already in use by container "f47aa96ead73e8c0550d1e1d3a6e997e5d016b46cc9f38d0cccd85c27150266f". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+PS D:\Netology> docker rm first_node
+first_node
+PS D:\Netology> docker run -d --name first_node -v D:\Netology:/var/first/data node:15.14  
+7dfb0fbb60f54e3c906202ca8a8476f671479ea73f369dc68fea2b1a62b4ccd6
+PS D:\Netology> docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+PS D:\Netology> docker run -d --name first_node -v D:\Netology:/var/first/data node:15.14 sleep infinity
+docker: Error response from daemon: Conflict. The container name "/first_node" is already in use by container "7dfb0fbb60f54e3c906202ca8a8476f671479ea73f369dc68fea2b1a62b4ccd6". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+PS D:\Netology> docker rm first_node
+first_node
+PS D:\Netology> docker run -d --name first_node -v D:\Netology:/var/first/data node:15.14 sleep infinity
+a552f7750a62d1d32869e1b1abaeba4948f770d71c13533a2e08945f2a6dd19d
+PS D:\Netology> docker ps
+CONTAINER ID   IMAGE        COMMAND                  CREATED         STATUS         PORTS     NAMES
+a552f7750a62   node:15.14   "docker-entrypoint.s…"   7 seconds ago   Up 5 seconds             first_node
+PS D:\Netology> docker run -d --name second_node -v D:\Netology:/var/second/data node:15.14 sleep infinity
+docker: Error response from daemon: Conflict. The container name "/second_node" is already in use by container "f47aa96ead73e8c0550d1e1d3a6e997e5d016b46cc9f38d0cccd85c27150266f". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+PS D:\Netology> docker rm second_node
+second_node
+PS D:\Netology> docker run -d --name second_node -v D:\Netology:/var/second/data node:15.14 sleep infinity
+30468efcc2790581d78ba1f21d0b485a318664d2bea0b85be5a5909622d682bf
+PS D:\Netology> docker exec -it /bin/sh
+"docker exec" requires at least 2 arguments.
+See 'docker exec --help'.
+
+Usage:  docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
+
+Run a command in a running container
+PS D:\Netology> docker exec -it first_node /bin/sh
+# cd /var/first/data
+# echo "123" > data.txt
+# exit
+PS D:\Netology> docker ps
+CONTAINER ID   IMAGE        COMMAND                  CREATED         STATUS         PORTS     NAMES
+30468efcc279   node:15.14   "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes             second_node
+a552f7750a62   node:15.14   "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes             first_node
+PS D:\Netology> docker exec -it second_node /bin/sh
+# cd /var/second/data
+# ls
+data123.txt       data.txt
+# cat data.txt
+123
+# cat data123.txt
+321# exit
+PS D:\Netology> docker stop first_node
+first_node
+PS D:\Netology> docker stop second_node
+second_node
+PS D:\Netology> docker rm first_node   
+first_node
+PS D:\Netology> docker rm second_node  
+second_node
+PS D:\Netology> docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+PS D:\Netology> docker rmi node:15.14
+Untagged: node:15.14
+Untagged: node@sha256:608bba799613b1ebf754034ae008849ba51e88b23271412427b76d60ae0d0627
+Deleted: sha256:3d3f41722daf1a77c34d6eade6676bbffa2d6a2a21095de2ab0c427a5c942fc9
+Deleted: sha256:601382991a159cfc5013ad973158f30b7b7a913e8d7e547b3456deab3ad98022
+Deleted: sha256:d5db49eecae8c02c9ea3a79f89c43ded9162bac118a0302a7b514d0df82aa112
+Deleted: sha256:a2c1973858d0aad3de0927294602b17c8ef9050c30e0f461e0868997a08552a4
+Deleted: sha256:a0153172017a08a521a8be971ca4dcb5fbc4b7227642c12bbb2da6265bd66b50
+Deleted: sha256:f1123940e954d335d91b52a40fab4f8144f38ff113ade7d65663071d0f06da6f
+Deleted: sha256:f1f4fbb0e7e6e0ce2d9eae1e577f9f6df0a719dd874bff00b2d08895c75c297d
+Deleted: sha256:1eb455ab6d45fdbbd90fccff791ffa228080c052acf464f8da1b1d78650bd706
+Deleted: sha256:1dbe832a694971a925d7d216f49b700c95f402bd72288f9d37eceb1d59dcf72d
+Deleted: sha256:2f4ee6a2e1b5dfb9236cd262e788f9d39109242ca27a4aacb583c8af66ec3ff7
+PS D:\Netology> 
