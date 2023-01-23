@@ -1,0 +1,86 @@
+PS D:\Netology\ndse_library> docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+PS D:\Netology\ndse_library> docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+PS D:\Netology\ndse_library>
+ *  Журнал восстановлен 
+
+PS D:\Netology\ndse_library> docker pull busybox
+Using default tag: latest
+latest: Pulling from library/busybox
+205dae5015e7: Pull complete
+Digest: sha256:7b3ccabffc97de872a30dfd234fd972a66d247c8cfc69b0550f276481852627c
+Status: Downloaded newer image for busybox:latest
+docker.io/library/busybox:latest
+PS D:\Netology\ndse_library> docker run  --name pinger busybox ping -c 7 netology.ru
+PING netology.ru (188.114.98.224): 56 data bytes
+64 bytes from 188.114.98.224: seq=0 ttl=36 time=28.502 ms
+64 bytes from 188.114.98.224: seq=1 ttl=36 time=29.104 ms
+64 bytes from 188.114.98.224: seq=2 ttl=36 time=27.903 ms
+64 bytes from 188.114.98.224: seq=3 ttl=36 time=28.107 ms
+64 bytes from 188.114.98.224: seq=4 ttl=36 time=28.259 ms
+64 bytes from 188.114.98.224: seq=5 ttl=36 time=28.690 ms
+64 bytes from 188.114.98.224: seq=6 ttl=36 time=29.245 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 27.903/28.544/29.245 ms
+PS D:\Netology\ndse_library> docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                      PORTS     NAMES
+fbb4230f8bbc   busybox   "ping -c 7 netology.…"   36 seconds ago   Exited (0) 29 seconds ago           
+  pinger
+PS D:\Netology\ndse_library> docker logs pinger
+PING netology.ru (188.114.98.224): 56 data bytes
+64 bytes from 188.114.98.224: seq=0 ttl=36 time=28.502 ms
+64 bytes from 188.114.98.224: seq=1 ttl=36 time=29.104 ms
+64 bytes from 188.114.98.224: seq=2 ttl=36 time=27.903 ms
+64 bytes from 188.114.98.224: seq=3 ttl=36 time=28.107 ms
+64 bytes from 188.114.98.224: seq=4 ttl=36 time=28.259 ms
+64 bytes from 188.114.98.224: seq=5 ttl=36 time=28.690 ms
+64 bytes from 188.114.98.224: seq=6 ttl=36 time=29.245 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 27.903/28.544/29.245 ms
+PS D:\Netology\ndse_library> docker start pinger
+pinger
+PS D:\Netology\ndse_library> docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS                          PORTS     NAMES
+fbb4230f8bbc   busybox   "ping -c 7 netology.…"   2 minutes ago   Exited (0) About a minute ago             pinger
+PS D:\Netology\ndse_library> docker logs pinger
+PING netology.ru (188.114.98.224): 56 data bytes
+64 bytes from 188.114.98.224: seq=0 ttl=36 time=28.502 ms
+64 bytes from 188.114.98.224: seq=1 ttl=36 time=29.104 ms
+64 bytes from 188.114.98.224: seq=2 ttl=36 time=27.903 ms
+64 bytes from 188.114.98.224: seq=3 ttl=36 time=28.107 ms
+64 bytes from 188.114.98.224: seq=4 ttl=36 time=28.259 ms
+64 bytes from 188.114.98.224: seq=5 ttl=36 time=28.690 ms
+64 bytes from 188.114.98.224: seq=6 ttl=36 time=29.245 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 27.903/28.544/29.245 ms
+PING netology.ru (188.114.98.224): 56 data bytes
+64 bytes from 188.114.98.224: seq=0 ttl=36 time=29.128 ms
+64 bytes from 188.114.98.224: seq=1 ttl=36 time=32.898 ms
+64 bytes from 188.114.98.224: seq=2 ttl=36 time=29.424 ms
+64 bytes from 188.114.98.224: seq=3 ttl=36 time=29.898 ms
+64 bytes from 188.114.98.224: seq=4 ttl=36 time=27.857 ms
+64 bytes from 188.114.98.224: seq=5 ttl=36 time=29.029 ms
+64 bytes from 188.114.98.224: seq=6 ttl=36 time=28.866 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 27.857/29.585/32.898 ms
+PS D:\Netology\ndse_library> docker rm pinger
+pinger
+PS D:\Netology\ndse_library> docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+PS D:\Netology\ndse_library> docker rmi busybox
+Untagged: busybox:latest
+Untagged: busybox@sha256:7b3ccabffc97de872a30dfd234fd972a66d247c8cfc69b0550f276481852627c
+Deleted: sha256:66ba00ad3de8677a3fa4bc4ea0fc46ebca0f14db46ca365e7f60833068dd0148
+Deleted: sha256:b64792c17e4ad443d16b218afb3a8f5d03ca0f4ec49b11c1a7aebe17f6c3c1d2
+PS D:\Netology\ndse_library> docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+PS D:\Netology\ndse_library>
